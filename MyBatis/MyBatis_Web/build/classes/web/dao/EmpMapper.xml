@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DTD -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="web.dao.EmpDao">
+
+	<resultMap type="web.dto.Emp" id="E">
+ 		<id column="empno" property="empno" /><!-- PK -->
+ 		
+ 		<result column="ename" property="ename"/>
+ 		<result column="job" property="job"/>
+ 		<result column="mgr" property="mgr"/>
+ 		<result column="hiredate" property="hiredate"/>
+ 		<result column="sal" property="sal"/>
+ 		<result column="comm" property="comm"/>
+ 		<result column="deptno" property="deptno"/>
+ 		
+ 		
+	</resultMap>
+	
+		<sql id="selectEmp">
+			SELECT * FROM emp
+		</sql>
+
+		<sql id="whereCond">
+		 WHERE empno = #{empno}
+		</sql>
+
+<!-- 		<select id="selectCountAll"> -->
+<!-- 			SELECT count(*) FROM ( -->
+<!-- 				<include refid="selectEmp" /> -->
+<!-- 			) -->
+<!-- 		</select> -->
+
+
+<!-- 	<select id="selectAll" resultType="web.dto.Emp" > -->
+	<select id="selectAll" resultMap="E" >
+		<include refid="selectEmp" />
+		ORDER BY empno
+	</select>
+
+	<select id="selectOne" parameterType="web.dto.Emp" resultType="web.dto.Emp">
+		<include refid="selectEmp" />
+		<include refid="whereCond" />
+	</select>
+
+	
+</mapper>
